@@ -1,16 +1,3 @@
-// window.addEventListener("load", startTime)
-
-// const date = new Date()
-// console.log(date.toDateString())
-// console.log(date.getFullYear())
-
-
-// function startTime() {
-//     var currentTime = new Date();
-//     document.getElementById('time').innerHTML = currentTime.toDateString();
-//     console.log('lol')
-// }
-
 
 window.onload = main;
 
@@ -20,23 +7,39 @@ function main() {
 }
 
 function upDateClock() {
-    const timeHolder = document.getElementById('time');
     const date = new Date();
     let hours = date.getHours();
     let minutes = date.getMinutes();
     let seconds = date.getSeconds();
     
-        if (hours < 10) {
-            hours = '0' + hours;
-        }
+    hours = formatDateValue(hours);
+    minutes = formatDateValue(minutes);
+    seconds = formatDateValue(seconds);
     
-        if (minutes < 10) {
-            minutes = '0' + minutes;
-        }
+    //update time
+    const timeHolder = document.getElementById('time');
+     timeHolder.innerText = hours + ':' + minutes + ':' + seconds;
     
-        if (seconds < 10) {
-            seconds = '0' + seconds;
-        }
-    
-    timeHolder.innerText = hours + ':' + minutes + ':' + seconds;
+    //update weekday
+    const weekdayHolder = document.getElementById('weekday');
+    weekdayHolder.innerText = getWeekday(date);
+}
+
+function getWeekday(date) {
+    const weekdayIndex = date.getDay();
+    switch (weekdayIndex) {
+        case 0: return 'Söndag';
+        case 1: return 'Måndag';
+        case 2: return 'Tisdag';
+        case 3: return 'Onsdag';
+        case 4: return 'Torsdag';
+        case 5: return 'Fredag';
+    }
+}
+
+function formatDateValue(value) {
+    if (value < 10) {
+        return '0' + value;
+    }
+    return value;
 }
